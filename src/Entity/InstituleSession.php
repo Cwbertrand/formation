@@ -108,6 +108,7 @@ class InstituleSession
         return $this;
     }
 
+    
     /**
      * @return Collection<int, Programme>
      */
@@ -163,5 +164,18 @@ class InstituleSession
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getThemesession();
+    }
+
+    public function getPlaceReserve(){
+        return count($this->getStagiaires());
+    }
+    
+    public function getPlaceRestant(){
+        return $this->getPlacetotal() - $this->getPlaceReserve();
     }
 }

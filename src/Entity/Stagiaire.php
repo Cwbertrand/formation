@@ -100,6 +100,12 @@ class Stagiaire
         return $this->datenaissance;
     }
 
+    public function getAge(){
+        $now = new \DateTime();
+        $datDiff = date_diff($this->getDatenaissance(), $now);
+        return $datDiff->format('%Y');
+    }
+
     public function setDatenaissance(\DateTimeInterface $datenaissance): self
     {
         $this->datenaissance = $datenaissance;
@@ -141,5 +147,10 @@ class Stagiaire
         $this->email = $email;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getNom();
     }
 }

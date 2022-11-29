@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Module | Elan Formation{% endblock %}
+
+{% block body %}
+<div class="output_container">
+    <table class="table">
+        <div class="flex">
+            <a class="btn_add" href="{{path('add_module')}}">Ajouter le module</a>
+        </div>
+        <thead>
+            <tr>
+                <th>Module</th>
+                <th>Categorie</th>
+                <th>Duration</th>
+                <th>Detaille le Module</th>
+                <th>Edit le Module</th>
+                <th>Supprimer le module</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for form in forms %}
+                <tr>
+                    <td>{{form.module.nommodule}}</td>
+                    <td>{{form.module.categorie.nomcategorie}}</td>
+                    <td>{{form.nbjours}} Jours</td>
+                    
+                    <td><a href="{{path('show_module', {'id': form.id})}}"><i class="fa-solid fa-list"></i></a></td>
+                    <td><a href="{{path('edit_module', {'id': form.id})}}"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                    <td><a href="{{path('delete_module', {'id': form.id})}}"><i class="fa-solid fa-trash-can"></i></a></td>
+                </tr>
+            {% endfor %}
+            {# {% for programme in modulejour %}
+            <tr>
+                {{ dump(programme) }}
+                <td>{{form.programmes.nbjours}}</td>
+            {% endfor %} #}
+            
+            
+            
+        </tbody>
+    </table>
+</div>
+{% endblock %}

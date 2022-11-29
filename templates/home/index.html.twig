@@ -1,20 +1,101 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Accuiel | Elan Formation!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div class="output_container">
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    {# la session qui est en cours #}
+    <section class="encour">
+        <table class="table">
+            <h3>Session en cour</h3>
+            <thead>
+                <tr>
+                    <th>Institulé Session</th>
+                    <th>Date de Début</th>
+                    <th>Date de Fin</th>
+                    <th>Nb place théorique</th>
+                    <th>Nb place Reservé</th>
+                    <th>Nb place Restantes</th>
+                    <th>Détails Programme</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sessionEnCour in sessionEnCours %}
+                    <tr>
+                        <td>{{sessionEnCour.themesession}}</td>
+                        <td>{{sessionEnCour.datecommerce|date('d/m/Y')}}</td>
+                        <td>{{sessionEnCour.datefin|date('d/m/Y')}}</td>
+                        <td>{{sessionEnCour.placetotal}}</td>
+                        <td>{{sessionEnCour.PlaceReserve}}</td>
+                        <td>{{sessionEnCour.PlaceRestant}}</td>
+                        <td><a href="{{path('show_instituleSession', {'id': sessionEnCour.id})}}"><i class="fa-solid fa-list"></i></a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/cwber/Desktop/formation/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/cwber/Desktop/formation/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
+    {# la session qui arrive #}
+    <section class="venir">
+        <table class="table">
+            <h3>Session vas Venir</h3>
+            <thead>
+                <tr>
+                    <th>Institulé Session</th>
+                    <th>Date de Début</th>
+                    <th>Date de Fin</th>
+                    <th>Nb place théorique</th>
+                    <th>Nb place Reservé</th>
+                    <th>Nb place Restantes</th>
+                    <th>Détails Programme</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sessionToCome in sessionToComes %}
+                    <tr>
+                        <td>{{sessionToCome.themesession}}</td>
+                        <td>{{sessionToCome.datecommerce|date('d/m/Y')}}</td>
+                        <td>{{sessionToCome.datefin|date('d/m/Y')}}</td>
+                        <td>{{sessionToCome.placetotal}}</td>
+                        <td>{{sessionToCome.PlaceReserve}}</td>
+                        <td>{{sessionToCome.PlaceRestant}}</td>
+                        <td><a href="{{path('show_instituleSession', {'id': sessionToCome.id})}}"><i class="fa-solid fa-list"></i></a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    {# la session qui est passe #}
+    <section class="passer">
+        <table class="table">
+            <h3>Session Passé</h3>
+            <thead>
+                <tr>
+                    <th>Institulé Session</th>
+                    <th>Date de Début</th>
+                    <th>Date de Fin</th>
+                    <th>Nb place théorique</th>
+                    <th>Nb place Reservé</th>
+                    <th>Nb place Restantes</th>
+                    <th>Détails Programme</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sessionPassed in sessionPasseds %}
+                    <tr>
+                        <td>{{sessionPassed.themesession}}</td>
+                        <td>{{sessionPassed.datecommerce|date('d/m/Y')}}</td>
+                        <td>{{sessionPassed.datefin|date('d/m/Y')}}</td>
+                        <td>{{sessionPassed.placetotal}}</td>
+                        <td>{{sessionPassed.PlaceReserve}}</td>
+                        <td>{{sessionPassed.PlaceRestant}}</td>
+                        <td><a href="{{path('show_instituleSession', {'id': sessionPassed.id})}}"><i class="fa-solid fa-list"></i></a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
 </div>
 {% endblock %}

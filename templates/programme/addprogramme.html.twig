@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProgrammeController!{% endblock %}
+
+{% block body %}
+<div class="input_container">
+    <div class="border">
+        {{ form_start(form) }}
+        <div class="form">
+            <h3 class="edit_text">Le Programme</h3>
+            <div class="form_control">
+                {{ form_label(form.nbjours, 'Les Jours') }}
+                {{ form_row(form.nbjours) }}
+            </div>
+            <div class="form_control">
+                {{ form_label(form.module, 'les Modules') }}
+                {{ form_row(form.module) }}
+            </div>
+
+            <div class="form_control">
+                {{ form_label(form.instituleSession, 'L\'institulé Session') }}
+                {{ form_row(form.instituleSession) }}
+            </div>
+        </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}

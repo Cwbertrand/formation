@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Module detaille | Elan Formation{% endblock %}
+
+
+{% block body %}
+<section class="programme">
+    <p><strong>Module: </strong> {{detaileModule.nommodule}}</p>
+    {{ dump(detaileModule) }}
+</section>
+<section class="session">
+    {% for session in detaileModule.programmes %}
+    <p><strong>Session: </strong> {{session.instituleSession.themesession}} jours</p>
+    {% endfor %}
+{% endblock %}
+

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter la Session | Elan Formation{% endblock %}
+
+{% block body %}
+    <div class="input_container">
+        <div class="border">
+            {{ form_start(form) }}
+            <div class="form">
+                <h3 class="edit_text">La Session</h3>
+                <div class="form_control">
+                    {{ form_label(form.themesession, 'Institulé Session') }}
+                    {{ form_row(form.themesession) }}
+                </div>
+        
+                <div class="form_control">
+                    {{ form_label(form.placetotal, 'Nb de place') }}
+                    {{ form_row(form.placetotal) }}
+                </div>
+                <div class="form_control">
+                    {{ form_label(form.datecommerce, 'Date de début') }}
+                    {{ form_row(form.datecommerce) }}
+                </div>
+        
+                <div class="form_control">
+                    {{ form_label(form.datefin, 'Date de fin') }}
+                    {{ form_row(form.datefin) }}
+                </div>
+        
+                <div class="form_control">
+                    {{ form_label(form.datefin, 'Détail de session') }}
+                    {{ form_row(form.description) }}
+                </div>
+            </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

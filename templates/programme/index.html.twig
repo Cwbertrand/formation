@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le Programme | Elan Formation{% endblock %}
+
+{% block body %}
+<div class="output_container">
+    <table class="table">
+        <div class="flex">
+            <a class="btn_add" href="{{path('add_programme')}}">Ajouter la session</a>
+        </div>
+        <thead>
+            <tr>
+                <th>Institulé Session</th>
+                <th>Date de Début</th>
+                <th>Date de Fin</th>
+                <th>Nb place théorique</th>
+                <th>Nb place Reservé</th>
+                <th>Nb place Restantes</th>
+                <th>Nb place Restantes</th>
+                <th>Détails Programme</th>
+            </tr>
+        </thead>
+        <tbody>
+            {# {% for form in forms %}
+            {{ dump(form) }}
+                <tr>
+                    <td>{{form.themesession}}</td>
+                    <td>{{form.datecommerce|date('d-m-Y')}}</td>
+                    <td>{{form.datefin|date('d-m-Y')}}</td>
+                    <td>{{form.placetotal}}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><a href=""><i class="fa-solid fa-list"></i></a></td>
+                </tr>
+            {% endfor %} #}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

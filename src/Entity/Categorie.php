@@ -36,6 +36,11 @@ class Categorie
         return $this->nomcategorie;
     }
 
+    public function __toString()
+    {
+        return $this->getNomcategorie(); 
+    }
+
     public function setNomcategorie(string $nomcategorie): self
     {
         $this->nomcategorie = $nomcategorie;

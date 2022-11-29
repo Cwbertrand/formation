@@ -39,6 +39,53 @@ class InstituleSessionRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @return InstituleSession[] Returns an array of InstituleSession objects
+     *  this returns the courses that are in process 
+     */
+    public function sessionEnCour(): array
+    {
+        $now = new \DateTime();
+        return $this->createQueryBuilder('i')
+            ->andWhere('i.datecommerce < :now')
+            ->andWhere('i.datefin > :now')
+            ->setParameter('now', $now)
+            ->orderBy('i.datecommerce', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return InstituleSession[] Returns an array of InstituleSession objects
+     *  this returns the courses that are in are still to come 
+     */
+    public function sessionToCome(): array
+    {
+        $now = new \DateTime();
+        return $this->createQueryBuilder('i')
+            ->andWhere('i.datecommerce > :now')
+            ->setParameter('now', $now)
+            ->orderBy('i.datecommerce', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return InstituleSession[] Returns an array of InstituleSession objects
+     *  this returns the courses that have passed 
+     */
+    public function sessionPassed(): array
+    {
+        $now = new \DateTime();
+        return $this->createQueryBuilder('i')
+            ->andWhere('i.datefin < :now')
+            ->andWhere('i.datecommerce < :now')
+            ->setParameter('now', $now)
+            ->orderBy('i.datecommerce', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return InstituleSession[] Returns an array of InstituleSession objects
 //     */

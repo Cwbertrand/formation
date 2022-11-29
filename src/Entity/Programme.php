@@ -40,6 +40,11 @@ class Programme
         return $this->nbjours;
     }
 
+    public function __toString()
+    {
+        return $this->getNbjours();
+    }
+
     public function setNbjours(int $nbjours): self
     {
         $this->nbjours = $nbjours;

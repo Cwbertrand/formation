@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Session detaille | Elan Formation{% endblock %}
+
+
+{% block body %}
+
+<div class="detail_container">
+    <h1>Detail de session</h1>
+    <section class="programme">
+            {% for programme in sessiondetails.programmes %}
+                <p><strong>Nobre de jours: </strong> {{programme.nbjours}} jours</p>
+                <p><strong>Categorie de session: </strong> {{programme.module.categorie}}</p>
+                <p><strong>Module de session: </strong> {{programme.module.nommodule}}</p>
+            {% endfor %}
+    </section>
+    <section class="session">
+        <p><strong>Institulé Session: </strong> {{sessiondetails.themesession}}</p>
+        <p><strong>Date de Début: </strong> {{sessiondetails.datecommerce|date("d/m/Y")}}</p>
+        <p><strong>Date fin: </strong> {{sessiondetails.datefin|date("d/m/Y")}}</p>
+        <p><strong>Numbre du place total: </strong> {{sessiondetails.placetotal}} places</p>
+        <p><strong>Numbre du place reservé: </strong> {{sessiondetails.PlaceReserve}} places</p>
+        <p><strong>Numbre du place restantes: </strong> {{sessiondetails.PlaceRestant}} places</p>
+        <p><strong>Description de cour: </strong> </p>
+        <p class="description_edit">{{sessiondetails.description}}</p>
+    </section>
+
+
+    {# enroll a Stagiaire #}
+    <div class="output_container" style="height: 100% !important;">
+        <h4 style="padding-bottom: 20px">Liste de stagiaire inscrits</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom & Prénom</th>
+                    <th>Mobile</th>
+                    <th>Email</th>
+                    <th>Detail de stagiaire</th>
+                    <th>Desincrit le Stagiaire</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for noninscrit in sessiondetails.stagiaires %}
+                    <tr>
+                        <td>{{noninscrit.nom}} {{noninscrit.prenom}}</td>
+                        <td>{{noninscrit.mobile}}</td>
+                        <td>{{noninscrit.email}}</td>
+                        <td><a href="{{path('show_stagiaire', {'id': noninscrit.id})}}"><i class="fa-solid fa-list"></i></a></td>
+                        <td><a href="{{ path('desinscrire_stagiaire', {'idinstitulesession': sessiondetails.id,
+                            'idstagiaire': noninscrit.id}) }}" class="unenroll_btn">
+                            Unenroll</a></td>
+                    </tr>
+                {% endfor %}
+                
+            </tbody>
+        </table>
+    </div>
+
+
+    {# Unenroll a Stagiaire #}
+    {% if sessiondetails.getPlaceRestant != 0 %}
+        <div class="output_container" style="height: 100% !important;">
+            <h4 style="padding-bottom: 20px">Non Inscrit Stagiaire</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nom & Prénom</th>
+                        <th>Mobile</th>
+                        <th>Email</th>
+                        <th>Detail de stagiaire</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for noninscrit in noninscrits %}
+                        <tr>
+                            <td><a href="{{ path('show_stagiaire', {'id': noninscrit.id} )}}">{{noninscrit.nom}} {{noninscrit.prenom}}</a></td>
+                            <td>{{noninscrit.mobile}}</td>
+                            <td>{{noninscrit.email}}</td>
+                            <td><a href="{{ path('inscrire_stagiaire', {'idinstitulesession': sessiondetails.id, 
+                                'idstagiaire': noninscrit.id}) }}" class="enroll_btn">
+                                Enroll</a></td>
+                        </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+

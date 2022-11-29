@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Stagiaire detaille | Elan Formation{% endblock %}
+
+
+{% block body %}
+<div class="detail_container">
+        <h1>Detail de stagiaire</h1>
+    <section class="programme">
+        <p><strong>Nom & Prénom: </strong> {{detailstagiaire.nom}}  {{detailstagiaire.prenom}}</p>
+        <p><strong>Date de naissance: </strong> {{detailstagiaire.datenaissance|date("d/m/Y")}} ({{detailstagiaire.Age}} ans)</p>
+        <p><strong>Numéro de téléphone: </strong> {{detailstagiaire.mobile}}</p>
+        <p><strong>Email: </strong> {{detailstagiaire.email}}</p>
+        <p><strong>Ville: </strong> {{detailstagiaire.ville}}</p>
+    </section>
+    <section class="stagiaire session">
+        <div class="output_container" style="height: 100% !important; margin-top: 0px !important;">
+            <h4 style="padding-bottom: 20px">Liste de session prévue</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Institulé Session</th>
+                        <th>Date de Début</th>
+                        <th>Date de Fin</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for session in detailstagiaire.institulesession %}
+                        <tr>
+                            <td>{{session.themesession}}</td>
+                            <td>{{session.datecommerce|date('d/m/Y')}}</td>
+                            <td>{{session.datefin|date('d/m/Y')}}</td>
+                        </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+        </div>
+        
+    </section>
+</div>
+{% endblock %}
+

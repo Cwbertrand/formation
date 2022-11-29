@@ -6,14 +6,60 @@
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
+        
+        {{ encore_entry_link_tags('app') }}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
+        <link href="{{ asset('css/style.css') }}" rel="stylesheet"/>
         {% endblock %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
+        
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <nav class="nav">
+            <a href="{{path('app_home')}}" class="logo">Elan Formation</a>
+            <div class="hamburger">
+                <span class="line"></span>
+                <span class="line"></span>
+                <span class="line"></span>
+            </div>
+        
+            <div class="nav__link hide">
+                
+                {% if app.user %}
+                    <a href="{{path('instituleSession')}}">Liste des Sessions</a>
+                    <a href="{{path('stagiaire')}}">Liste de stagiaire</a>
+                    <a href="{{path('categorie')}}">Liste des categories</a>
+                    <a href="{{path('module')}}">Liste des modules</a>
+                    <a href="{{path('add_programme')}}">Ajoute le programme</a>
+                    <a href="{{path('app_logout')}}">Deconnexion</a>
+                {% else %}
+                    <a href="{{path('app_register')}}">Inscription</a>
+                    <a href="{{path('app_login')}}">Connexion</a>
+                {% endif %}
+                
+            </div>
+        </nav>
+        {% block body %}
+        {% endblock %}
+
+        <footer class="footer-distributed">
+			<div class="footer-right">
+				<a href="#"><i class="fa-brands fa-twitter"></i></a>
+				<a href="#"><i class="fa-brands fa-facebook"></i></i></a>
+				<a href="#"><i class="fa-brands fa-linkedin"></i></a>
+				<a href="#"><i class="fa-brands fa-github"></i></a>
+			</div>
+			<div class="footer-left">
+				<p class="footer-links">
+					<a class="link-1" href="#">Home</a>
+				</p>
+				<p>Elan Formation &copy; 2022</p>
+			</div>
+		</footer>
+
+        {% block javascripts %}
+            <script src="{{ asset('js/main.js') }}"></script>
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
     </body>
 </html>

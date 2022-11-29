@@ -46,6 +46,11 @@ class Module
         return $this;
     }
 
+    public function __toString()
+    {
+        return $this->getNommodule();
+    }
+
     public function getCategorie(): ?Categorie
     {
         return $this->categorie;
