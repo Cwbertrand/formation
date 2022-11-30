@@ -37,6 +37,9 @@ class InstituleSession
     #[ORM\ManyToMany(targetEntity: Stagiaire::class, mappedBy: 'institulesession')]
     private Collection $stagiaires;
 
+    #[ORM\ManyToOne(inversedBy: 'instituleSessions')]
+    private ?Formateur $formateur = null;
+
     public function __construct()
     {
         $this->programmes = new ArrayCollection();
@@ -162,10 +165,22 @@ class InstituleSession
         if ($this->stagiaires->removeElement($stagiaire)) {
             $stagiaire->removeInstitulesession($this);
         }
-
+        
         return $this;
     }
-
+    
+        public function getFormateur(): ?Formateur
+        {
+            return $this->formateur;
+        }
+    
+        public function setFormateur(?Formateur $formateur): self
+        {
+            $this->formateur = $formateur;
+    
+            return $this;
+        }
+    
     public function __toString()
     {
         return $this->getThemesession();
@@ -177,5 +192,11 @@ class InstituleSession
     
     public function getPlaceRestant(){
         return $this->getPlacetotal() - $this->getPlaceReserve();
+    }
+
+    public function getPlein(){
+        if ($this->getPlaceReserve() == $this->getPlacetotal()) {
+            return '<span style="background-color:rgb(96, 159, 161); color: white; padding: 4px; border-radius: 7px">place complet</span>';
+        }
     }
 }

@@ -23,7 +23,8 @@ class ModuleController extends AbstractController
     #[Route('/module', name: 'module')]
     public function index(): Response
     {
-        $form = $this->em->getRepository(Programme::class)->findBy([], ['nbjours' => 'ASC']);
+        //$form = $this->em->getRepository(Programme::class)->findBy([], ['nbjours' => 'ASC']);
+        $form = $this->em->getRepository(module::class)->findBy([], ['nommodule' => 'ASC']);
 
         return $this->render('module/index.html.twig', [
             'forms' => $form,
@@ -64,9 +65,9 @@ class ModuleController extends AbstractController
     }
 
     #[Route('/module/{id}', name: 'show_module')]
-    public function showModule(Module $module): Response
+    public function showModule(): Response
     {
-        
+        $module = new Module();
         return $this->render('module/showmodule.html.twig', [
             'detaileModule' => $module,
         ]);

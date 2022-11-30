@@ -16,6 +16,7 @@
     </section>
     <section class="session">
         <p><strong>Institulé Session: </strong> {{sessiondetails.themesession}}</p>
+        <p><strong>Nom & Prénom de formateur: </strong> {{sessiondetails.formateur.nom}}  {{sessiondetails.formateur.prenom}}</p>
         <p><strong>Date de Début: </strong> {{sessiondetails.datecommerce|date("d/m/Y")}}</p>
         <p><strong>Date fin: </strong> {{sessiondetails.datefin|date("d/m/Y")}}</p>
         <p><strong>Numbre du place total: </strong> {{sessiondetails.placetotal}} places</p>
@@ -36,7 +37,9 @@
                     <th>Mobile</th>
                     <th>Email</th>
                     <th>Detail de stagiaire</th>
-                    <th>Desincrit le Stagiaire</th>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <th>Desincrit le Stagiaire</th>
+                    {% endif %}
                 </tr>
             </thead>
             <tbody>
@@ -46,9 +49,15 @@
                         <td>{{noninscrit.mobile}}</td>
                         <td>{{noninscrit.email}}</td>
                         <td><a href="{{path('show_stagiaire', {'id': noninscrit.id})}}"><i class="fa-solid fa-list"></i></a></td>
-                        <td><a href="{{ path('desinscrire_stagiaire', {'idinstitulesession': sessiondetails.id,
-                            'idstagiaire': noninscrit.id}) }}" class="unenroll_btn">
-                            Unenroll</a></td>
+
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <td>
+                                <a href="{{ path('desinscrire_stagiaire', {'idinstitulesession': sessiondetails.id,
+                                'idstagiaire': noninscrit.id}) }}" class="unenroll_btn">
+                                Unenroll</a>
+                            </td>
+                        {% endif %}
+                        
                     </tr>
                 {% endfor %}
                 
@@ -58,33 +67,35 @@
 
 
     {# Unenroll a Stagiaire #}
-    {% if sessiondetails.getPlaceRestant != 0 %}
-        <div class="output_container" style="height: 100% !important;">
-            <h4 style="padding-bottom: 20px">Non Inscrit Stagiaire</h4>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Nom & Prénom</th>
-                        <th>Mobile</th>
-                        <th>Email</th>
-                        <th>Detail de stagiaire</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for noninscrit in noninscrits %}
+    {% if is_granted('ROLE_ADMIN') %}
+        {% if sessiondetails.getPlaceRestant != 0 %}
+            <div class="output_container" style="height: 100% !important;">
+                <h4 style="padding-bottom: 20px">Non Inscrit Stagiaire</h4>
+                <table class="table">
+                    <thead>
                         <tr>
-                            <td><a href="{{ path('show_stagiaire', {'id': noninscrit.id} )}}">{{noninscrit.nom}} {{noninscrit.prenom}}</a></td>
-                            <td>{{noninscrit.mobile}}</td>
-                            <td>{{noninscrit.email}}</td>
-                            <td><a href="{{ path('inscrire_stagiaire', {'idinstitulesession': sessiondetails.id, 
-                                'idstagiaire': noninscrit.id}) }}" class="enroll_btn">
-                                Enroll</a></td>
+                            <th>Nom & Prénom</th>
+                            <th>Mobile</th>
+                            <th>Email</th>
+                            <th>Detail de stagiaire</th>
                         </tr>
-                    {% endfor %}
-                    
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                        {% for noninscrit in noninscrits %}
+                            <tr>
+                                <td><a href="{{ path('show_stagiaire', {'id': noninscrit.id} )}}">{{noninscrit.nom}} {{noninscrit.prenom}}</a></td>
+                                <td>{{noninscrit.mobile}}</td>
+                                <td>{{noninscrit.email}}</td>
+                                <td><a href="{{ path('inscrire_stagiaire', {'idinstitulesession': sessiondetails.id, 
+                                    'idstagiaire': noninscrit.id}) }}" class="enroll_btn">
+                                    Enroll</a></td>
+                            </tr>
+                        {% endfor %}
+                        
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
     {% endif %}
 </div>
 {% endblock %}

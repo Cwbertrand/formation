@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FormateurController!{% endblock %}
+
+{% block body %}
+<div class="output_container">
+    <table class="table">
+        <div class="flex">
+            <a class="btn_add" href="{{path('add_formateur')}}">Ajouter les formateur</a>
+        </div>
+        <thead>
+            <tr>
+                <th>Nom & Prénom</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for form in forms %}
+                <tr>
+                    <td>{{form.nom}} {{form.prenom}}</td>
+                </tr>
+            {% endfor %}
+            
+        </tbody>
+    </table>
+</div>
+{% endblock %}

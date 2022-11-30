@@ -116,13 +116,13 @@ a{
 .nav a {
     text-decoration: none;
     color: rgb(237, 231, 231);
-    font-size: 1rem;
+    font-size: .6rem;
     font-weight: bold;
     text-transform: uppercase;
 }
 
 .nav__link a {
-    font-size: 10px;
+    font-size: 8px;
 }
 
 .nav {

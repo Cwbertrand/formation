@@ -6,6 +6,9 @@
 {% block body %}
 <div class="detail_container">
         <h1>Detail de stagiaire</h1>
+        <div style="display: flex; justify-content: start;  width: 50% !important;">
+            <a href="{{path ('stagiaire')}}" style="color: red; padding-bottom: 5px;">return to liste stagiaire...</a>
+        </div>
     <section class="programme">
         <p><strong>Nom & Prénom: </strong> {{detailstagiaire.nom}}  {{detailstagiaire.prenom}}</p>
         <p><strong>Date de naissance: </strong> {{detailstagiaire.datenaissance|date("d/m/Y")}} ({{detailstagiaire.Age}} ans)</p>

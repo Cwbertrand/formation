@@ -4,6 +4,9 @@
 
 {% block body %}
 <div class="input_container">
+    <div style="display: flex; justify-content: end;  width: 50% !important;">
+        <a href="{{path ('app_home')}}" style="color: red; padding-bottom: 5px;">return to home...</a>
+    </div>
     <div class="border">
         {{ form_start(form) }}
         <div class="form">

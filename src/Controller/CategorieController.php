@@ -27,6 +27,7 @@ class CategorieController extends AbstractController
         ]);
     }
 
+    //edit et add categorie
     #[Route('/categorie/add', name: 'add_categorie')]
     #[Route('/categorie/{id}/edit', name: 'edit_categorie')]
     public function addCategorie(Categorie $categorie = null, Request $request)
@@ -48,6 +49,7 @@ class CategorieController extends AbstractController
         
         return $this->render('categorie/addcategorie.html.twig', [
                     'form' => $form->createView(),
+                    'edit' => $categorie->getId(),
         ]);
     }
 

@@ -79,7 +79,6 @@ class InstituleSessionRepository extends ServiceEntityRepository
         $now = new \DateTime();
         return $this->createQueryBuilder('i')
             ->andWhere('i.datefin < :now')
-            ->andWhere('i.datecommerce < :now')
             ->setParameter('now', $now)
             ->orderBy('i.datecommerce', 'ASC')
             ->getQuery()

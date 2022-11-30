@@ -11,6 +11,10 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
         <link href="{{ asset('css/style.css') }}" rel="stylesheet"/>
         {% endblock %}
+        {% block javascripts %}
+            <script src="{{ asset('js/main.js') }}"></script>
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
 
         
     </head>
@@ -25,12 +29,16 @@
         
             <div class="nav__link hide">
                 
-                {% if app.user %}
+                {% if is_granted('ROLE_ADMIN') %}
                     <a href="{{path('instituleSession')}}">Liste des Sessions</a>
                     <a href="{{path('stagiaire')}}">Liste de stagiaire</a>
                     <a href="{{path('categorie')}}">Liste des categories</a>
                     <a href="{{path('module')}}">Liste des modules</a>
                     <a href="{{path('add_programme')}}">Ajoute le programme</a>
+                    <a href="{{path('formateur')}}">Liste des formateur</a>
+                    <a href="{{path('app_logout')}}">Deconnexion</a>
+
+                {% elseif is_granted('ROLE_USER') %}
                     <a href="{{path('app_logout')}}">Deconnexion</a>
                 {% else %}
                     <a href="{{path('app_register')}}">Inscription</a>
@@ -56,10 +64,5 @@
 				<p>Elan Formation &copy; 2022</p>
 			</div>
 		</footer>
-
-        {% block javascripts %}
-            <script src="{{ asset('js/main.js') }}"></script>
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
     </body>
 </html>

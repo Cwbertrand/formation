@@ -7,12 +7,20 @@
         <div class="border">
             {{ form_start(form) }}
             <div class="form">
-                <h3 class="edit_text">La Session</h3>
+                {% if edit %}
+                    <h3 class="edit_text">Edit la Session</h3>
+                {% else %}
+                    <h3 class="edit_text">Créer la Session</h3>
+                {% endif %}
+                
                 <div class="form_control">
                     {{ form_label(form.themesession, 'Institulé Session') }}
                     {{ form_row(form.themesession) }}
                 </div>
-        
+                <div class="form_control">
+                    {{ form_label(form.formateur, 'Formateur') }}
+                    {{ form_row(form.formateur) }}
+                </div>
                 <div class="form_control">
                     {{ form_label(form.placetotal, 'Nb de place') }}
                     {{ form_row(form.placetotal) }}

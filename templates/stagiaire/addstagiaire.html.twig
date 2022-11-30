@@ -4,10 +4,17 @@
 
 {% block body %}
     <div class="input_container">
+        <div style="display: flex; justify-content: end;  width: 50% !important;">
+            <a href="{{path ('stagiaire')}}" style="color: red; padding-bottom: 5px;">return to liste stagiaire...</a>
+        </div>
         <div class="border">
             {{ form_start(form) }}
             <div class="form">
-                <h3 class="edit_text">Le Stagiaire</h3>
+                {% if edit %}
+                <h3 class="edit_text">Edit le Stagiaire</h3>
+                {% else %}
+                    <h3 class="edit_text">Ajouter le Stagiaire</h3>
+                {% endif %}
 
                 <div class="form_control">
                     {{ form_label(form.nom, 'Nom de Stagiaire') }}

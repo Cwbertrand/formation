@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Formateur;
 use App\Entity\InstituleSession;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,6 +20,7 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(): Response
     {
+        
         $sessionEnCour = $this->em->getRepository(InstituleSession::class)->sessionEnCour();
         $sessionToCome = $this->em->getRepository(InstituleSession::class)->sessionToCome();
         $sessionPassed = $this->em->getRepository(InstituleSession::class)->sessionPassed();

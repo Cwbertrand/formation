@@ -30,6 +30,7 @@ class InstituleSessionController extends AbstractController
         ]);
     }
 
+    //add and edit session
     #[Route('/institulesession/add', name: 'add_instituleSession')]
     #[Route('/institulesession/{id}/edit', name: 'edit_instituleSession')]
     public function addSession(InstituleSession $instituleSession = null, Request $request)
@@ -50,7 +51,8 @@ class InstituleSessionController extends AbstractController
         }
         
         return $this->render('institule_session/addsession.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'edit' => $instituleSession->getId(),
         ]);
     }
 
@@ -73,11 +75,18 @@ class InstituleSessionController extends AbstractController
         ]);
     }
 
-    //Inscrit un stagiaire
+
     /**
-     * @ParamConverter("institulesession", options={"mapping": {"idinstitulesession" : "id"}})
-     * @ParamConverter("stagiaire", options={"mapping": {"idstagiaire" : "id"}})
+     * doctrineconverter options
+     * The ParamConverter annotation calls converters to convert request parameters to objects. 
+     * These objects are stored as request attributes and so they can be injected as controller
+     * mapping: Configures the properties and values to use with the findOneBy() method: 
+     * the key is the route placeholder name and the value is the Doctrine property name:
     */
+
+    //Inscrit un stagiaire
+    #[ParamConverter('institulesession', options: ['mapping' => ['dateidinstitulesession' => 'id']])]
+    #[ParamConverter('stagiaire', options: ['mapping' => ['idstagiaire' => 'id']])]
     #[Route('/institulesession/inscrire/{idinstitulesession}/{idstagiaire}', name: 'inscrire_stagiaire')]
     public function inscrireStagiaire(InstituleSession $institulesession, Stagiaire $stagiaire): Response
     {
@@ -96,17 +105,13 @@ class InstituleSessionController extends AbstractController
 
 
     //desinscrit un stagiaire
-    /**
-     * @ParamConverter("institulesession", options={"mapping": {"idinstitulesession" : "id"}})
-     * @ParamConverter("stagiaire", options={"mapping": {"idstagiaire" : "id"}})
-    */
+    #[ParamConverter('institulesession', options: ['mapping' => ['dateidinstitulesession' => 'id']])]
+    #[ParamConverter('stagiaire', options: ['mapping' => ['idstagiaire' => 'id']])]
     #[Route('/institulesession/desinscrire/{idinstitulesession}/{idstagiaire}', name: 'desinscrire_stagiaire')]
     public function desinscrireStagiaire(InstituleSession $institulesession, Stagiaire $stagiaire): Response
     {
-
-            $institulesession->removeStagiaire($stagiaire);
-            $this->em->flush();
-        
+        $institulesession->removeStagiaire($stagiaire);
+        $this->em->flush();
         $noninscrit = $this->em->getRepository(Stagiaire::class)->findNonInscrit($institulesession->getId());
         return $this->render('institule_session/showsession.html.twig', [
             'sessiondetails' => $institulesession,

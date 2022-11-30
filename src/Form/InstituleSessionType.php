@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Formateur;
 use App\Entity\InstituleSession;
 use App\Entity\Programme;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -31,6 +32,10 @@ class InstituleSessionType extends AbstractType
                 'label' => false,
             ])
             ->add('description', TextareaType::class, [
+                'label' => false,
+            ])
+            ->add('formateur', EntityType::class, [
+                'class' => Formateur::class,
                 'label' => false,
             ])
         ;
