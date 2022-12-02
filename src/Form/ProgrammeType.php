@@ -19,10 +19,10 @@ class ProgrammeType extends AbstractType
             ->add('nbjours', NumberType::class,[
                 'label' => false,
             ])
-            ->add('instituleSession', EntityType::class,[
-                'class' => InstituleSession::class,
-                'label' => false,
-            ])
+            // ->add('instituleSession', EntityType::class,[
+            //     'class' => InstituleSession::class,
+            //     'label' => false,
+            // ])
             ->add('module', EntityType::class,[
                 'class' => Module::class,
                 'label' => false,

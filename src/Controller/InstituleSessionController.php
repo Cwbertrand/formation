@@ -68,16 +68,52 @@ class InstituleSessionController extends AbstractController
 
     //Show details of session
     #[Route('/institulesession/{id}', name: 'show_instituleSession')]
-    public function showSession(InstituleSession $instituleSession): Response
+    public function showSession(Programme $programme = null, InstituleSession $institulesession = null, Request $request)
     {
-        $noninscrit = $this->em->getRepository(Stagiaire::class)->findNonInscrit($instituleSession->getId());
+        $noninscrit = $this->em->getRepository(Stagiaire::class)->findNonInscrit($institulesession->getId());
+
+        $form = $this->createForm(ProgrammeType::class, $programme);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $programme = $form->getData();
+            $programme->setInstituleSession($institulesession);
+            $this->em->persist($programme);
+            $this->em->flush();
+            
+            return $this->redirectToRoute('show_instituleSession', ['id' => $institulesession->getId()]);
+        }
 
         return $this->render('institule_session/showsession.html.twig', [
-            'sessiondetails' => $instituleSession,
+            'form' => $form->createView(),
+            'sessiondetails' => $institulesession,
             'noninscrits' => $noninscrit,
         ]);
     }
+    
+    // Add programme and edit
+    #[ParamConverter('institulesession', options: ['mapping' => ['idinstitulesession' => 'id']])]
+    #[ParamConverter('programme', options: ['mapping' => ['idprogramme' => 'id']])]
+    #[Route('/programme/add', name: 'add_programme')]
+    #[Route('/programme/edit/{idprogramme}/{idinstitulesession}', name: 'edit_programme')]
+    public function addProgramme(Programme $programme = null, InstituleSession $institulesession= null, Request $request)
+    {
 
+        $form = $this->createForm(ProgrammeType::class, $programme);
+        $form->handleRequest($request);
+
+            if($form->isSubmitted() && $form->isValid()){
+                $programme = $form->getData();
+                $programme->setInstituleSession($institulesession);
+                $this->em->persist($programme);
+                $this->em->flush();
+                return $this->redirectToRoute('show_instituleSession', ['id' => $institulesession->getId()]);
+            }
+        
+        return $this->render('institule_session/addprogramme.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
 
     /**
      * doctrineconverter options
@@ -128,43 +164,6 @@ class InstituleSessionController extends AbstractController
         ]);
     }
 
-    // Add programme and edit
-    #[ParamConverter('institulesession', options: ['mapping' => ['idinstitulesession' => 'id']])]
-    #[ParamConverter('programme', options: ['mapping' => ['idprogramme' => 'id']])]
-    #[Route('/programme/add', name: 'add_programme')]
-    #[Route('/programme/edit/{idprogramme}/{idinstitulesession}', name: 'edit_programme')]
-    public function addProgramme(Programme $programme = null, InstituleSession $institulesession= null, Request $request)
-    {
-
-        $form = $this->createForm(ProgrammeType::class, $programme);
-        $form->handleRequest($request);
-
-        if(!$programme){
-            $programme = new Programme();
-
-            if($form->isSubmitted() && $form->isValid()){
-                $programme = $form->getData();
-                $this->em->persist($programme);
-                $this->em->flush();
-                
-                return $this->redirectToRoute('instituleSession');
-                
-            }
-        }else{
-            if($form->isSubmitted() && $form->isValid()){
-                $programme = $form->getData();
-                $this->em->persist($programme);
-                $this->em->flush();
-                
-                return $this->redirectToRoute('show_instituleSession', ['id' => $institulesession->getId()]);
-                
-            }
-        }
-        
-        return $this->render('institule_session/addprogramme.html.twig', [
-            'form' => $form->createView()
-        ]);
-    }
 
     //Delete le programme
     #[ParamConverter('institulesession', options: ['mapping' => ['idinstitulesession' => 'id']])]

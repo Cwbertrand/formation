@@ -294,6 +294,7 @@ i.fa-solid.fa-trash-can {
 }
 
 .programme,
+.programme_session,
 .session,
 .stagiaire{
     padding: 40px 10px;
@@ -308,6 +309,7 @@ i.fa-solid.fa-trash-can {
 }
 
 .programme p,
+.programme_session p,
 .session p{
     line-height: 30px;
     margin-left: 15px;
@@ -370,6 +372,21 @@ i.fa-solid.fa-trash-can {
     border-radius: 7px;
     color: #fff;
     transition: .4s ease-in;
+}
+
+.programme_session {
+    background-color: rgb(114, 150, 150);
+    width: 100%;
+    margin: 20px 0px;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.add_edit_programme{
+    display: flex;
+}
+
+.programme_padding{
+    padding: 0px 5px;
 }
 
 
