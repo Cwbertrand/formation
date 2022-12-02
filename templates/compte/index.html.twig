@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User profile{% endblock %}
+
+{% block fsnav %} {% endblock %}
+{% block body %}
+<style>
+    body{
+        background-color: rgb(120, 167, 209);
+        color: #fff;
+    }
+
+    .compte_container{
+        padding: 20px 100px;
+    }
+
+    .col{
+        display: grid;
+        grid-template-columns: 18% 45% 28%;
+        grid-gap: 4%;
+    }
+    .icon_user,
+    .modify{
+        text-align: center;
+        align-self: center;
+    }
+
+    .fa-user-tie,
+    .fa-envelope,
+    .fa-shield-halved{
+        font-size: 40px !important;
+    }
+
+    .col .user_info{
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .col .user_info .nom{
+        padding: 30px 10px;
+    }
+    .col .user_info .nom strong{
+        color: #000;
+    }
+
+    .modify a{
+        border: #fff 1px solid;
+        color: #fff;
+        display: block;
+        padding: 10px 0px;
+        margin: 0px 20px;
+        transition: .5s ease-in;
+    }
+
+    .modify a:hover{
+        color: #000;
+        background-color: #fff;
+    }
+
+</style>
+<div class="compte_container">
+    <h1>Données personnelles</h1>
+    <h5 style="color: #000; padding-bottom: 10px;">Voir et mettre à jour vos informations ici. Gérez vos identifiants et mots de passe ici.</h5>
+    <hr>
+        <div class="col">
+            <div class="icon_user">
+                <i class="fa-solid fa-user-tie"></i>
+            </div>
+            <div class="user_info">
+                <div class="nom">
+                    <p><strong>Nom & prénom</strong></p>
+                    <p>John Doe</p>
+                </div>
+                <div class="nom">
+                    <p><strong>Date de Naissance</strong></p>
+                    <p>05/10/1993</p>
+                </div>
+                <div class="nom">
+                    <p><strong>Téléphone mobile</strong></p>
+                    <p>59493 303 20 </p>
+                </div>
+                {# <p>Rôles:  
+                    {{app.user.roles[0]}}
+                    {% if app.user.roles|length > 1 %}
+                    , {{app.user.roles[1]}}
+                    {% endif %}
+                </p> #}
+            </div>
+            <div class="modify">
+                <a href="#">Modfier</a>
+            </div>
+        </div>
+    <hr >
+        <div class="col">
+            <div class="icon_user">
+                <i class="fa-solid fa-envelope"></i>
+            </div>
+            <div class="user_info">
+                <div class="nom">
+                    <p><strong>Email</strong></p>
+                    <p>{{app.user.email}}</p>
+                </div>
+                <div class="nom">
+                    <p><strong>Rôle(s)</strong></p>
+                    <p><span>
+                        {% for roles in app.user.roles %}
+                            {{roles}}
+                        {% endfor %}
+                    </span></p>
+                </div>
+                {# <p>Rôles:  
+                    {{app.user.roles[0]}}
+                    {% if app.user.roles|length > 1 %}
+                    , {{app.user.roles[1]}}
+                    {% endif %}
+                </p> #}
+            </div>
+            <div class="modify">
+                <a href="#">Modfier</a>
+            </div>
+        </div>
+    <hr >
+        <div class="col">
+            <div class="icon_user">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div class="user_info">
+                <div class="nom">
+                    <p><strong>Mot de passe</strong></p>
+                    <p>************</p>
+                </div>
+            </div>
+            <div class="modify">
+                <a href="{{ path('app_forgot_password_request') }}">Modfier</a>
+            </div>
+        </div>
+
+    {# {{ dump(app.user) }} #}
+    
+</div>
+
+
+{% endblock %}

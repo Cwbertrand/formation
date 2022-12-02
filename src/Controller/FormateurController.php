@@ -53,4 +53,24 @@ class FormateurController extends AbstractController
             'edit' => $formateur->getId(),
         ]);
     }
+
+    //delete formateur
+    #[Route('/formateur/{id}/delete', name: 'delete_formateur')]
+    public function deleteformateur(Formateur $formateur)
+    {
+        $this->em->remove($formateur);
+        $this->em->flush();
+
+        return $this->redirectToRoute('formateur');
+    }
+
+    //show detail formateur
+    #[Route('/formateur/{id}', name: 'show_formateur')]
+    public function showformateur(Formateur $formateur): Response
+    {
+        
+        return $this->render('formateur/showformateur.html.twig', [
+            'detailformateur' => $formateur,
+        ]);
+    }
 }

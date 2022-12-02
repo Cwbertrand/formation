@@ -113,4 +113,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function remove(User $user): self
+    {
+        $this->user->removeElement($user);
+
+        return $this;
+    }
 }

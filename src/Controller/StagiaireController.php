@@ -54,6 +54,7 @@ class StagiaireController extends AbstractController
         ]);
     }
 
+    //delete stagiaire
     #[Route('/stagiaire/{id}/delete', name: 'delete_stagiaire')]
     public function deleteStagiaire(Stagiaire $stagiaire)
     {
@@ -63,6 +64,7 @@ class StagiaireController extends AbstractController
         return $this->redirectToRoute('stagiaire');
     }
 
+    //show detail stagiaire
     #[Route('/stagiaire/{id}', name: 'show_stagiaire')]
     public function showStagiaire(Stagiaire $stagiaire): Response
     {

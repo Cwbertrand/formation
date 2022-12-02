@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FormateurController!{% endblock %}
+
+{% block fsnav %} {% endblock %}
+{% block body %}
+<div class="detail_container">
+    <h1>Detail de formateur</h1>
+    <div style="display: flex; justify-content: start;  width: 50% !important;">
+        <a href="{{path ('formateur')}}" style="color: red; padding-bottom: 5px;">return to liste formateur...</a>
+    </div>
+<section class="programme">
+    <p><strong>Nom & Prénom: </strong> {{detailformateur.nom}}  {{detailformateur.prenom}}</p>
+</section>
+<section class="formateur session">
+    <div class="output_container" style="height: 100% !important; margin-top: 0px !important;">
+        <h4 style="padding-bottom: 20px">Liste de session par le formateur</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Institulé Session</th>
+                    <th>Date de Début</th>
+                    <th>Date de Fin</th>
+                    <th>Detail de programme</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for session in detailformateur.instituleSessions %}
+                    <tr>
+                        <td>{{session.themesession}}</td>
+                        <td>{{session.datecommerce|date('d/m/Y')}}</td>
+                        <td>{{session.datefin|date('d/m/Y')}}</td>
+                        <td><a href="{{path('show_instituleSession', {'id': session.id})}}"><i class="fa-solid fa-list"></i></a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+</section>
+</div>
+{% endblock %}

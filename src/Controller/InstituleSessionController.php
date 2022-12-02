@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Programme;
 use App\Entity\Stagiaire;
+use App\Form\ProgrammeType;
 use App\Entity\InstituleSession;
 use App\Form\InstituleSessionType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -64,6 +66,7 @@ class InstituleSessionController extends AbstractController
         return $this->redirectToRoute('instituleSession');
     }
 
+    //Show details of session
     #[Route('/institulesession/{id}', name: 'show_instituleSession')]
     public function showSession(InstituleSession $instituleSession): Response
     {
@@ -85,7 +88,13 @@ class InstituleSessionController extends AbstractController
     */
 
     //Inscrit un stagiaire
-    #[ParamConverter('institulesession', options: ['mapping' => ['dateidinstitulesession' => 'id']])]
+    // Annotration method
+    // /**
+    //  * @ParamConverter{'institulesession', options={'mapping': {'idinstitulesession': 'id'}}}
+    //  * @ParamConverter{'stagiaire', options={'mapping': {'idstagiaire': 'id'}}}
+    //  */
+    //Attribute method
+    #[ParamConverter('institulesession', options: ['mapping' => ['idinstitulesession' => 'id']])]
     #[ParamConverter('stagiaire', options: ['mapping' => ['idstagiaire' => 'id']])]
     #[Route('/institulesession/inscrire/{idinstitulesession}/{idstagiaire}', name: 'inscrire_stagiaire')]
     public function inscrireStagiaire(InstituleSession $institulesession, Stagiaire $stagiaire): Response
@@ -105,7 +114,7 @@ class InstituleSessionController extends AbstractController
 
 
     //desinscrit un stagiaire
-    #[ParamConverter('institulesession', options: ['mapping' => ['dateidinstitulesession' => 'id']])]
+    #[ParamConverter('institulesession', options: ['mapping' => ['idinstitulesession' => 'id']])]
     #[ParamConverter('stagiaire', options: ['mapping' => ['idstagiaire' => 'id']])]
     #[Route('/institulesession/desinscrire/{idinstitulesession}/{idstagiaire}', name: 'desinscrire_stagiaire')]
     public function desinscrireStagiaire(InstituleSession $institulesession, Stagiaire $stagiaire): Response
@@ -118,5 +127,55 @@ class InstituleSessionController extends AbstractController
             'noninscrits' => $noninscrit,
         ]);
     }
+
+    // Add programme and edit
+    #[ParamConverter('institulesession', options: ['mapping' => ['idinstitulesession' => 'id']])]
+    #[ParamConverter('programme', options: ['mapping' => ['idprogramme' => 'id']])]
+    #[Route('/programme/add', name: 'add_programme')]
+    #[Route('/programme/edit/{idprogramme}/{idinstitulesession}', name: 'edit_programme')]
+    public function addProgramme(Programme $programme = null, InstituleSession $institulesession= null, Request $request)
+    {
+
+        $form = $this->createForm(ProgrammeType::class, $programme);
+        $form->handleRequest($request);
+
+        if(!$programme){
+            $programme = new Programme();
+
+            if($form->isSubmitted() && $form->isValid()){
+                $programme = $form->getData();
+                $this->em->persist($programme);
+                $this->em->flush();
+                
+                return $this->redirectToRoute('instituleSession');
+                
+            }
+        }else{
+            if($form->isSubmitted() && $form->isValid()){
+                $programme = $form->getData();
+                $this->em->persist($programme);
+                $this->em->flush();
+                
+                return $this->redirectToRoute('show_instituleSession', ['id' => $institulesession->getId()]);
+                
+            }
+        }
+        
+        return $this->render('institule_session/addprogramme.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    //Delete le programme
+    #[ParamConverter('institulesession', options: ['mapping' => ['idinstitulesession' => 'id']])]
+    #[ParamConverter('programme', options: ['mapping' => ['idprogramme' => 'id']])]
+    #[Route('/programme/delete/{idprogramme}/{idinstitulesession}', name: 'delete_programme')]
+    public function deleteProgramme(Programme $programme = null, InstituleSession $institulesession): Response
+    {
+        $this->em->remove($programme);
+        $this->em->flush();
+        return $this->redirectToRoute('show_instituleSession', ['id' => $institulesession->getId()]);
+    }
+
 
 }

@@ -19,6 +19,7 @@
         
     </head>
     <body>
+    {% if block('fsnav') is defined %}
         <nav class="nav">
             <a href="{{path('app_home')}}" class="logo">Elan Formation</a>
             <div class="hamburger">
@@ -34,19 +35,20 @@
                     <a href="{{path('stagiaire')}}">Liste de stagiaire</a>
                     <a href="{{path('categorie')}}">Liste des categories</a>
                     <a href="{{path('module')}}">Liste des modules</a>
-                    <a href="{{path('add_programme')}}">Ajoute le programme</a>
                     <a href="{{path('formateur')}}">Liste des formateur</a>
+                    <a href="{{path('compte')}}">Profile</a>
+                    <a href="{{path('admin')}}">Paneau Admin</a>
                     <a href="{{path('app_logout')}}">Deconnexion</a>
 
                 {% elseif is_granted('ROLE_USER') %}
                     <a href="{{path('app_logout')}}">Deconnexion</a>
+                    <a href="{{path('compte')}}">Profile</a>
                 {% else %}
-                    <a href="{{path('app_register')}}">Inscription</a>
                     <a href="{{path('app_login')}}">Connexion</a>
                 {% endif %}
-                
             </div>
         </nav>
+    {% endif %}
         {% block body %}
         {% endblock %}
 

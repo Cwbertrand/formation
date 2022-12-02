@@ -2,11 +2,13 @@
 
 {% block title %}Session | Elan Formation{% endblock %}
 
+{% block fsnav %} {% endblock %}
 {% block body %}
 <div class="output_container">
     <table class="table">
         <div class="flex">
             <a class="btn_add" href="{{path('add_instituleSession')}}">Ajouter la session</a>
+            <a class="btn_add" href="{{path('add_programme')}}">Ajouter le programme</a>
         </div>
         <thead>
             <tr>
@@ -18,7 +20,7 @@
                 <th>Nb place Restantes</th>
                 <th>Détails Programme</th>
                 <th>Modifier la session</th>
-                <th>Suprimer la session</th>
+                <th>Supprimer la session</th>
             </tr>
         </thead>
         <tbody>

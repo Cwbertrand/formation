@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block fsnav %} {% endblock %}
+{% block body %}
+<div class="output_container">
+    <table class="table">
+        <div class="flex">
+            <a class="btn_add" href="{{path('app_register')}}">Enregistre les Utilisateur</a>
+        </div>
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>User Details</th>
+                {# <th>Edit User</th> #}
+                <th>Delete User</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for form in users %}
+                <tr>
+                    <td>{{form.email}}</td>
+
+                    <td><a href="{{path('show_user', {'id': form.id})}}"><i class="fa-solid fa-list"></i></a></td>
+                    {# <td><a href="{{path('edit_user', {'id': form.id})}}"><i class="fa-solid fa-pen-to-square"></i></a></td> #}
+                    <td><a href="{{path('delete_user', {'id': form.id})}}"><i class="fa-solid fa-trash-can"></i></a></td>
+                </tr>
+            {% endfor %}
+
+
+        </tbody>
+    </table>
+</div>
+{% endblock %}

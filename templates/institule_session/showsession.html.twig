@@ -2,17 +2,39 @@
 
 {% block title %}Session detaille | Elan Formation{% endblock %}
 
-
+{% block fsnav %} {% endblock %}
 {% block body %}
 
 <div class="detail_container">
     <h1>Detail de session</h1>
     <section class="programme">
-            {% for programme in sessiondetails.programmes %}
-                <p><strong>Nobre de jours: </strong> {{programme.nbjours}} jours</p>
-                <p><strong>Categorie de session: </strong> {{programme.module.categorie}}</p>
-                <p><strong>Module de session: </strong> {{programme.module.nommodule}}</p>
-            {% endfor %}
+            {# enroll a Stagiaire #}
+    <div class="" style="height: 100% !important;">
+        <h4 style="padding-bottom: 20px">Module et les jours pour une session</h4>
+        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Categorie de session</th>
+                    <th>Module de session</th>
+                    <th>Nobre de jours</th>
+                    <th>Modifier le programme</th>
+                    <th>Supprimer le programme</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for programme in sessiondetails.programmes %}
+                    <tr>
+                        <td>{{programme.module.categorie}}</td>
+                        <td>{{programme.module.nommodule}}</td>
+                        <td>{{programme.nbjours}} jours</td>
+                        <td><a href="{{path('edit_programme', {'idprogramme': programme.id, 'idinstitulesession': sessiondetails.id})}}"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                        <td><a href="{{path('delete_programme', {'idprogramme': programme.id, 'idinstitulesession': sessiondetails.id})}}"><i class="fa-solid fa-trash-can"></i></a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
     </section>
     <section class="session">
         <p><strong>Institulé Session: </strong> {{sessiondetails.themesession}}</p>
