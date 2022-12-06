@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\EditUserType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -43,5 +45,24 @@ class AdminController extends AbstractController
         // return $this->render('user/showuser.html.twig', [
         //     'detaileuser' => $user,
         // ]);
+    }
+
+    #[Route('/user/{id}/edit', name: 'edit_user')]
+    public function editUser(User $user, Request $request)
+    {
+        $form = $this->createForm(EditUserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->persist($user);
+            $this->em->flush();
+
+            $this->addFlash('message', 'Utilisateur modifié avec succès');
+            return $this->redirectToRoute('admin');
+        }
+        
+        return $this->render('admin/edituser.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 }

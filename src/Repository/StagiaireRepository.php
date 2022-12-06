@@ -39,7 +39,9 @@ class StagiaireRepository extends ServiceEntityRepository
         }
     }
 
-    /**
+    /** this is a subset form of query
+     * A QueryBuilder provides an API that is designed for conditionally constructing 
+     * a DQL (Doctrine Query Language) query in several steps
         * @return Stagiaire[] Returns an array of Stagiaire objects
         */
     public function findNonInscrit($institule_session_id)

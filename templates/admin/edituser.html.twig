@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block fsnav %} {% endblock %}
+{% block body %}
+<div class="input_container">
+    <div style="display: flex; justify-content: end;  width: 50% !important;">
+        <a href="{{path ('app_home')}}" style="color: red; padding-bottom: 5px;">return to home...</a>
+    </div>
+    <div class="border">
+        {{ form_start(form) }}
+        <div class="form">
+            <h3 class="edit_text">Edit User</h3>
+            <div class="form_control">
+                {{ form_label(form.email, 'Email') }}
+                {{ form_row(form.email) }}
+            </div>
+            <div class="form_control">
+                {{ form_label(form.roles, 'Rôles') }}
+                {{ form_row(form.roles) }}
+            </div>
+        </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}
